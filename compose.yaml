@@ -1,0 +1,28 @@
+services:
+  postgre:
+    image: postgres:13.14-bullseye
+    ports:
+      - 5432:5432
+      # porta local : porta container
+    environment:
+      POSTGRES_PASSWORD: "3232"
+      POSTGRES_USER: docker
+      POSTGRES_DB: dockernews
+  kubenews:
+    image: gustavodelcoli/kube-news:latest
+    depends_on:
+      - postgre
+    build:
+      context: ./src
+      dockerfile: ./Dockerfile
+    ports:
+      - 8080:8080
+    environment:
+      DB_DATABASE: dockernews
+      DB_USERNAME: docker
+      DB_PASSWORD: "3232"
+      DB_HOST: postgre
+
+networks:
+  kubenews_net:
+    driver: bridge

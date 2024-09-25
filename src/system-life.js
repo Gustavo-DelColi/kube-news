@@ -19,6 +19,8 @@ router.get('/ready', (req, res) => {
     }   
 });
 
+//exemplo
+
 router.get('/health', (req, res) => {
     
     res.json({
